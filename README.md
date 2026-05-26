@@ -4,6 +4,68 @@ This repository contains nine self-contained feature modules extracted from the 
 
 ---
 
+## Extraction Coverage & Reusability
+
+### Coverage — how much of the parent repo was extracted
+
+| Metric | Value |
+|--------|-------|
+| Total source files in parent repo | 94 |
+| Total non-blank LOC in parent repo | 2,429 |
+| Unique files extracted across all features | 48 |
+| Extracted LOC | 914 |
+| **File coverage** | **51.1%** |
+| **LOC coverage** | **37.6%** |
+
+> The extractor captured just over half the files and ~38% of code lines. The unextracted 48.9% is mostly: Parking Lot system (entirely skipped — no feature matched it), boilerplate `main.py` entry points, test files, and secondary subsystems like order management and notification observers that were not part of any extracted feature scope.
+
+### Reusability — extracted code shared across 2+ features
+
+| Metric | Value |
+|--------|-------|
+| Files shared across ≥2 features | 6 |
+| Shared LOC | 194 |
+| **Reusability by file count** | **12.5%** |
+| **Reusability by LOC** | **21.2%** |
+
+The 6 shared files are all Cricinfo core models reused by commentary, news, and cricket-operations features:
+
+| File | LOC | Used by features |
+|------|-----|-----------------|
+| `match.py` | 49 | commentary-services, news-publishing, cricket-operations |
+| `team.py` | 37 | commentary-services, news-publishing, cricket-operations |
+| `player.py` | 46 | commentary-services, news-publishing, cricket-operations |
+| `schedule.py` | 31 | news-publishing, cricket-operations |
+| `points_table.py` | 20 | news-publishing, cricket-operations |
+| `venue.py` | 11 | commentary-services, news-publishing, cricket-operations |
+
+### Per-feature breakdown
+
+| Feature | Files | LOC | % of repo |
+|---------|-------|-----|-----------|
+| cricket-operations-service | 15 | 328 | 13.5% |
+| news-publishing-service | 11 | 286 | 11.8% |
+| library-lending-service | 1 | 209 | 8.6% |
+| commentary-services-service | 8 | 187 | 7.7% |
+| showtime-booking-service | 9 | 99 | 4.1% |
+| product-management-service | 5 | 64 | 2.6% |
+| member-profile-service | 5 | 55 | 2.3% |
+| payment-processing-service | 3 | 17 | 0.7% |
+| notification-sending-service | 1 | 6 | 0.2% |
+
+### What was not extracted
+
+| Subsystem | Files missed | LOC missed | Reason |
+|-----------|-------------|-----------|--------|
+| Parking Lot | 7 | 417 | No feature scope matched this system |
+| Online Shopping System | 15 | 270 | Orders, payments, shipment, tests skipped |
+| Stack Overflow | 11 | 268 | Only member/account extracted; Q&A models skipped |
+| Cricinfo | 8 | 372 | `main.py`, `data_generator.py`, notification system skipped |
+| Movie Ticket Booking System | 4 | 99 | Catalog, search, `payment.py` base class skipped |
+| Library Management System | 1 | 89 | Runner/demo script skipped |
+
+---
+
 ## Feature 1 — commentary-services-service
 
 Live cricket commentary management: attaches commentators to matches, accumulates comment logs, and retrieves the latest comment.
